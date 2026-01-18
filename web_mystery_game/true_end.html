@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>True End</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+      min-height: 100vh;
+    }
+
+    .content {
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    p {
+      font-size: 17px;
+      margin-bottom: 32px;
+      color: #b8b8b8;
+      text-align: left;
+      letter-spacing: 0.5px;
+    }
+
+    p.emphasis {
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 19px;
+      margin-top: 48px;
+      margin-bottom: 48px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .section {
+      margin: 60px 0;
+      padding: 30px 0;
+      border-left: 3px solid #444;
+      padding-left: 24px;
+    }
+
+    .highlight {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 4px solid #666;
+      padding: 24px;
+      margin: 40px 0;
+      font-size: 16px;
+      line-height: 2;
+    }
+
+    .message-box {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin: 50px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .message-box .sender {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .message-box .text {
+      color: #d4d4d4;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .final-note {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid #333;
+      color: #999;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 2;
+    }
+
+    .ending-title {
+      text-align: center;
+      margin-top: 100px;
+      padding-top: 60px;
+      border-top: 2px solid #444;
+    }
+
+    .ending-title h1 {
+      font-size: 48px;
+      font-weight: 300;
+      color: #ffffff;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff;
+      }
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .back-link a {
+      display: inline-block;
+      padding: 12px 32px;
+      background: #1a1a1a;
+      color: #999;
+      text-decoration: none;
+      border: 1px solid #333;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .back-link a:hover {
+      background: #222;
+      border-color: #555;
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 60px 24px 80px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .ending-title h1 {
+        font-size: 36px;
+        letter-spacing: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <p class="emphasis">你最终还是按下了那个号码。</p>
+
+      <div class="section">
+        <p>你提交了定位坐标、聊天记录、论坛信息，以及你一路整理出的零碎线索。</p>
+        <p>它们看起来并不完整，但足够真实。</p>
+      </div>
+
+      <div class="section">
+        <p>警方前往了你提供的地址。</p>
+        <p>那不是她的家，也不是任何她"本该出现"的地方。</p>
+      </div>
+
+      <div class="highlight">
+        <p>陈念被找到的时候，已经接近极限。</p>
+        <p>她被关在一处临时改造的空间里，手机早已被收走，</p>
+        <p>她后来发出的消息，当然不是出自她手。</p>
+      </div>
+
+      <div class="section">
+        <p>她的表叔在数小时后被控制。</p>
+        <p>证据链并不复杂，只是一直没人真正去拼。</p>
+      </div>
+
+      <div class="section">
+        <p>警方通报里用了"非法拘禁""协助犯罪"这样的词。</p>
+      </div>
+
+      <div class="section">
+        <p>几周后，她恢复了不少，你收到了她的消息。</p>
+      </div>
+
+      <div class="message-box">
+        <div class="sender">念念：</div>
+        <div class="text">
+          谢谢你，我还在。<br>
+          这次是真的。
+        </div>
+      </div>
+
+      <div class="section">
+        <p>你知道事情结束了，但也知道——</p>
+        <p style="color: #ff4444; font-weight: bold;">有些地方，从一开始就不该只有一个人被救出来。</p>
+      </div>
+
+      <div class="final-note">
+        <p>有些真相，需要有人去寻找。</p>
+        <p>有些选择，决定了不同的结局。</p>
+      </div>
+
+      <div class="ending-title">
+        <h1>True End</h1>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

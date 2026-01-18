@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理员后台 - 订货管理</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --accent: #ff0000;
+      --bg: #0a0a0a;
+      --card: #1a1a1a;
+      --muted: #999999;
+      --border: #333333;
+      --success: #ff0000;
+      --danger: #8b0000;
+      --warning: #cc0000;
+      --glow: #ff0000;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: var(--bg);
+      color: #cccccc;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
+    }
+
+    header {
+      background-color: var(--card);
+      border-bottom: 2px solid var(--glow);
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--glow);
+      letter-spacing: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .stats-badge {
+      background-color: var(--card);
+      color: var(--accent);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border: 1px solid var(--glow);
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+    }
+
+    .logout-btn {
+      padding: 10px 20px;
+      background-color: var(--danger);
+      color: var(--accent);
+      border: 1px solid var(--glow);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+    }
+
+    .logout-btn:hover {
+      background-color: var(--glow);
+      color: var(--bg);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--glow);
+      letter-spacing: 2px;
+    }
+
+    .page-subtitle {
+      color: var(--muted);
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background-color: var(--card);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+      border-left: 4px solid var(--accent);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+      border-color: var(--glow);
+    }
+
+    .stat-card h3 {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-card .value {
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--glow);
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--glow);
+      letter-spacing: 1px;
+    }
+
+    .messages-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--card);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .messages-table thead {
+      background-color: #0f0f0f;
+      border-bottom: 2px solid var(--glow);
+    }
+
+    .messages-table th {
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 14px;
+      text-shadow: 0 0 5px var(--glow);
+    }
+
+    .messages-table td {
+      padding: 15px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: #cccccc;
+    }
+
+    .messages-table tbody tr:hover {
+      background-color: rgba(255, 0, 0, 0.05);
+    }
+
+    .messages-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .message-id {
+      font-weight: 600;
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--glow);
+    }
+
+    .message-name {
+      font-weight: 500;
+      color: #cccccc;
+    }
+
+    .message-phone {
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    .message-time {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .message-content {
+      color: #aaaaaa;
+      max-width: 300px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .message-status {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-view {
+      background-color: var(--card);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+    }
+
+    .btn-view:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    }
+
+    .btn-delete {
+      background-color: var(--danger);
+      color: var(--accent);
+      border: 1px solid var(--glow);
+      box-shadow: 0 0 8px rgba(139, 0, 0, 0.4);
+    }
+
+    .btn-delete:hover {
+      background-color: var(--glow);
+      color: var(--bg);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    }
+
+    .btn-mark {
+      background-color: var(--card);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+    }
+
+    .btn-mark:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: var(--card);
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+      border: 1px solid var(--border);
+    }
+
+    .modal-header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--glow);
+    }
+
+    .modal-body {
+      margin-bottom: 20px;
+      color: #cccccc;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-close {
+      padding: 10px 20px;
+      background-color: var(--card);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-close:hover {
+      background-color: var(--danger);
+      border-color: var(--glow);
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+      background-color: #0f0f0f;
+      color: #cccccc;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .info-item {
+      display: flex;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-weight: 600;
+      width: 100px;
+      color: var(--accent);
+    }
+
+    .info-value {
+      flex: 1;
+      color: #cccccc;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card);
+      color: var(--accent);
+      font-weight: 600;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .faq-question:hover {
+      background-color: rgba(255, 0, 0, 0.05);
+      box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.1);
+    }
+
+    .faq-toggle {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--glow);
+    }
+
+    .faq-item.active .faq-toggle {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #aaaaaa;
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 20px;
+      max-height: 1000px;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .messages-table {
+        font-size: 12px;
+      }
+
+      .messages-table th,
+      .messages-table td {
+        padding: 10px;
+      }
+
+      .page-title {
+        font-size: 24px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .message-content {
+        max-width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">[ADMIN SYSTEM] 管理员后台</div>
+      <div class="header-actions">
+        <button class="logout-btn" onclick="logout()">退出登录</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="page-title">订货管理面板</h1>
+    <p class="page-subtitle">实时查看和管理所有客户订货信息</p>
+
+    <!-- 统计卡片 -->
+    <div class="dashboard-grid">
+      <div class="stat-card">
+        <h3>总订货留言</h3>
+        <div class="value">6</div>
+      </div>
+      <div class="stat-card">
+        <h3>今日新留言</h3>
+        <div class="value">2</div>
+      </div>
+      <div class="stat-card">
+        <h3>已处理</h3>
+        <div class="value">5</div>
+      </div>
+      <div class="stat-card">
+        <h3>待处理</h3>
+        <div class="value">1</div>
+      </div>
+    </div>
+
+    <!-- 管理员须知 -->
+    <div class="section">
+      <h2 class="section-title">管理员须知</h2>
+      <div class="faq-section" id="adminGuidelinesContainer"></div>
+    </div>
+  </main>
+
+  <!-- 详情模态框 -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">订货详情</div>
+      <div class="modal-body" id="detailContent"></div>
+      <div class="modal-footer">
+        <button class="btn-close" onclick="closeDetailModal()">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 管理员须知的内容配置 - 可自定义
+    const adminGuidelines = [
+      {
+        title: '系统访问权限',
+        content: '仅授权管理员可访问本系统。禁止分享登录密码或访问链接给任何第三方。所有操作均被记录并可追溯。'
+      },
+      {
+        title: '数据保护要求',
+        content: '客户信息属于机密数据。禁止复制、下载或通过任何非官方渠道泄露客户名单、电话号码或订货内容。'
+      },
+      {
+        title: '订货处理流程',
+        content: '接收订货后需在1小时内确认。记录所有联系沟通详情。'
+      },
+      {
+        title: '系统安全规则',
+        content: '不在公共网络使用本系统。禁止使用共享设备访问。发现异常活动应立即通知系统管理员。'
+      },
+      {
+        title: '常见问题解答',
+        content: '如需帮助，请查阅操作规范，并按规则执行。'
+      }
+    ];
+
+    // 初始化
+    function initDashboard() {
+      initAdminGuidelines();
+    }
+
+    // 初始化管理员须知
+    function initAdminGuidelines() {
+      const container = document.getElementById('adminGuidelinesContainer');
+      let html = '';
+
+      adminGuidelines.forEach((item, index) => {
+        html += `
+          <div class="faq-item" onclick="toggleGuideline(this)">
+            <div class="faq-question">
+              <span>${item.title}</span>
+              <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">${item.content}</div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // 切换管理员须知的展开/折叠
+    function toggleGuideline(element) {
+      element.classList.toggle('active');
+    }
+
+    // 退出登录
+    function logout() {
+      if (confirm('确定要退出管理员登录吗？')) {
+        window.location.href = 'order_website.html';
+      }
+    }
+
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', initDashboard);
+  </script>
+</body>
+</html>

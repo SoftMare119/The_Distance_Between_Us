@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>工商信息 — 许国成 经营店铺</title>
+  <style>
+    :root{--bg:#f5f7fb;--card:#fff;--accent:#0b66ff;--muted:#6b7280}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Helvetica Neue',Arial;background:var(--bg);color:#111}
+    .wrap{max-width:1000px;margin:28px auto;padding:20px}
+    .header{display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+    h1{margin:0;font-size:20px}
+    .card{background:var(--card);padding:18px;border-radius:10px;margin-top:18px;border:1px solid rgba(16,24,40,0.04)}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    .field{display:flex;gap:8px;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.04)}
+    .field:last-child{border-bottom:0}
+    .label{width:140px;color:var(--muted)}
+    .value{flex:1}
+    .sidebar .badge{display:inline-block;background:#eef6ff;color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:600}
+    .partners{margin-top:12px}
+    .partner{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;border:1px solid #f0f3fb;background:#fff;margin-bottom:8px}
+
+    @media (max-width:880px){.grid{grid-template-columns:1fr}.label{width:120px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="header">
+      <div class="logo">企</div>
+      <div>
+        <h1>清岚市联信通讯器材经营部（个体工商户）</h1>
+      </div>
+    </header>
+
+    <section class="card grid">
+      <div class="main">
+        <h2>基本信息</h2>
+        <div id="basicInfo"></div>
+
+        <h2 style="margin-top:14px">经营范围</h2>
+        <div id="scope" style="padding:8px 0;color:#222"></div>
+
+        <h2 style="margin-top:14px">备案与变更</h2>
+        <div id="events"></div>
+      </div>
+
+      <aside class="sidebar">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="badge" id="status">营业</div>
+          <div style="color:var(--muted)">注册号：<span id="regNo"></span></div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h3 style="margin:0 0 8px 0">联系方式</h3>
+          <div id="contact"></div>
+        </div>
+
+        <div class="card partners" style="margin-top:12px;">
+          <h3 style="margin:0 0 8px 0">关联人员</h3>
+          <div id="partners"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    // Load sample data from store_info.json
+    fetch('store_info.json').then(r=>r.json()).then(data=>{
+      // Basic fields
+      const basic = document.getElementById('basicInfo');
+      const regNo = document.getElementById('regNo');
+      const status = document.getElementById('status');
+      const scope = document.getElementById('scope');
+      const contact = document.getElementById('contact');
+      const partnersEl = document.getElementById('partners');
+      const events = document.getElementById('events');
+
+      regNo.textContent = data.regNo || '';
+      status.textContent = data.status || '';
+
+      const rows = [
+        ['企业名称', data.name],
+        ['法定代表人', data.owner],
+        ['资金数额', data.capital],
+        ['成立日期', data.founded],
+        ['注册地址', data.address],
+        ['经营状态', data.status]
+      ];
+      basic.innerHTML = rows.map(r=>`<div class="field"><div class="label">${r[0]}</div><div class="value">${r[1]||''}</div></div>`).join('');
+
+      scope.textContent = data.scope || '';
+
+      // Render website (clickable) and address. Phone/email removed per request.
+      const websiteHtml = `官网：<a href="store_website.html" target="_blank" rel="noopener">联信通讯</a><br>`;
+      contact.innerHTML = websiteHtml + `地址：${data.address||'—'}`;
+
+      if(Array.isArray(data.partners)){
+        partnersEl.innerHTML = data.partners.map(p=>`<div class="partner"><div style="width:40px;height:40px;border-radius:6px;background:#f0f3fb;display:flex;align-items:center;justify-content:center">${p.name[0]}</div><div><div style="font-weight:700">${p.name}</div><div style="color:var(--muted);font-size:13px">${p.role}</div></div></div>`).join('');
+      }
+
+      if(Array.isArray(data.events)){
+        events.innerHTML = data.events.map(e=>`<div class="field"><div class="label">${e.date}</div><div class="value">${e.desc}</div></div>`).join('');
+      }
+    }).catch(err=>{
+      console.error('failed to load store_info.json', err);
+      document.getElementById('basicInfo').innerHTML = '<p style="color:var(--muted)">无法加载数据，请确保 store_info.json 存在。</p>';
+    });
+  </script>
+</body>
+</html>

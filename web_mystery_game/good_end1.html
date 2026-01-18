@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Good End</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+      min-height: 100vh;
+    }
+
+    .content {
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    p {
+      font-size: 17px;
+      margin-bottom: 32px;
+      color: #b8b8b8;
+      text-align: left;
+      letter-spacing: 0.5px;
+    }
+
+    p.emphasis {
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 19px;
+      margin-top: 48px;
+      margin-bottom: 48px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .section {
+      margin: 60px 0;
+      padding: 30px 0;
+      border-left: 3px solid #444;
+      padding-left: 24px;
+    }
+
+    .highlight {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 4px solid #666;
+      padding: 24px;
+      margin: 40px 0;
+      font-size: 16px;
+      line-height: 2;
+    }
+
+    .message-box {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin: 50px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .message-box .sender {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .message-box .text {
+      color: #d4d4d4;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .final-note {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid #333;
+      color: #999;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 2;
+    }
+
+    .ending-title {
+      text-align: center;
+      margin-top: 100px;
+      padding-top: 60px;
+      border-top: 2px solid #444;
+    }
+
+    .ending-title h1 {
+      font-size: 48px;
+      font-weight: 300;
+      color: #ffffff;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff;
+      }
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .back-link a {
+      display: inline-block;
+      padding: 12px 32px;
+      background: #1a1a1a;
+      color: #999;
+      text-decoration: none;
+      border: 1px solid #333;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .back-link a:hover {
+      background: #222;
+      border-color: #555;
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 60px 24px 80px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .ending-title h1 {
+        font-size: 36px;
+        letter-spacing: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <p class="emphasis">你没有停在"找到她"这一步。</p>
+
+      <div class="section">
+        <p>你继续追踪你手中的线索</p>
+        <p>那些看似无关紧要的仓储信息引起了你的注意</p>
+        <p>你意识到陈念不是第一个，也不会是最后一个。</p>
+      </div>
+
+      <div class="section">
+        <p>警方这一次，没有只去一个点。</p>
+      </div>
+
+      <div class="highlight">
+        <p>不出所料，那个不起眼的仓库里有其他人。</p>
+        <p>有些人已经失联很久，</p>
+        <p>有些甚至连名字都记不清了</p>
+      </div>
+
+      <div class="section">
+        <p>表叔试图解释，</p>
+        <p>但仓库里留下的证据比他说得更多。</p>
+        <p>组织被连根拔起。</p>
+        <p>多个据点同时被查封。</p>
+      </div>
+
+      <div class="section">
+        <p>新闻用了很长的标题，</p>
+        <p>却依旧没能写清每一个人的遭遇。</p>
+      </div>
+
+      <div class="section">
+        <p>几周后，陈念终于上线了。</p>
+      </div>
+
+      <div class="section">
+        <p>她没有提那段时间发生的事。</p>
+      </div>
+
+      <div class="section">
+        <p>她只发了一条动态：</p>
+      </div>
+
+      <div class="message-box">
+        <div class="text">
+          今天的阳光很好。<br>
+          我第一次觉得，<br>
+          自己是真的回来了。
+        </div>
+      </div>
+
+      <div class="final-note">
+        <p>有些真相，值得被完整揭开。</p>
+        <p>有些选择，能改变更多人的命运。</p>
+      </div>
+
+      <div class="ending-title">
+        <h1>Good End</h1>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

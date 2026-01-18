@@ -1,0 +1,137 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>搜索 · 游戏线索</title>
+	<style>
+		:root{--bg:#fff;--page-bg:#f6f7fb;--accent:#1a73e8;--muted:#6b7280}
+		html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Helvetica Neue',Arial}
+		body{background:var(--page-bg);color:#111}
+
+		/* Header / search area */
+		.wrap{max-width:980px;margin:36px auto;padding:0 18px}
+		.search-header{background:transparent;padding:36px 0;text-align:center}
+		.logo{font-weight:700;color:var(--accent);font-size:34px;letter-spacing:0.4px}
+		.sub{color:var(--muted);margin-top:6px}
+
+		.search-box{display:flex;justify-content:center;margin-top:22px}
+		.search-field{width:70%;max-width:740px;display:flex;border-radius:24px;border:1px solid #e6e8ee;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,0.04)}
+		.search-field input{flex:1;padding:14px 18px;border:0;font-size:16px;border-radius:24px;outline:none}
+		.search-field button{background:transparent;border:0;padding:0 16px;color:var(--accent);font-weight:600;cursor:pointer}
+
+		/* Results */
+		.results{max-width:740px;margin:18px auto 120px}
+		.meta{color:var(--muted);font-size:13px;margin:6px 0 12px}
+		.result{padding:18px 14px;border-radius:6px;background:#fff;margin-bottom:14px;border:1px solid #eef0f6}
+		.result a.title{color:var(--accent);font-size:18px;text-decoration:none}
+		.result .url{color:#198038;font-size:13px;margin-top:6px;display:block}
+		.result .snippet{color:#374151;margin-top:8px;font-size:14px;line-height:1.5}
+
+		.noresult{padding:28px;text-align:center;color:var(--muted)}
+
+		.police-link{text-align:center;margin:60px 0 40px;padding:20px 0}
+		.police-link a{display:inline-block;padding:10px 24px;background:var(--accent);color:#fff;text-decoration:none;border-radius:6px;font-weight:500;font-size:13px;transition:opacity 0.3s;box-shadow:0 1px 4px rgba(26,115,232,0.15)}
+		.police-link a:hover{opacity:0.9}
+
+		@media (max-width:720px){
+			.search-field{width:92%}
+			.search-field input{padding:12px}
+			.logo{font-size:28px}
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<header class="search-header" role="banner">
+			<div class="logo">Hoogle</div>
+			<div class="sub">搜索关键词</div>
+
+			<div class="search-box">
+				<div class="search-field" role="search">
+					<input id="q" type="search" placeholder="请输入关键词" aria-label="搜索关键词">
+					<button id="go">搜索</button>
+				</div>
+			</div>
+		</header>
+
+		<div class="results" id="results" aria-live="polite"></div>
+
+		<div class="police-link">
+			<a href="police.html">我已掌握足够线索</a>
+		</div>
+	</div>
+
+	<script>
+		// data: each item has keywords (array), title, snippet, href, displayUrl
+		const data = [
+			{keywords:['陈念','念念'], title:'陈念的聊天记录（1）', snippet:'与陈念的早期对话记录，记录了日常交流的点滴。', href:'chat_history1.html', displayUrl:'chat_history1.html'},
+			{keywords:['陈念','念念'], title:'陈念的聊天记录（3）', snippet:'最近的聊天记录，可能包含重要线索。', href:'chat_history3.html', displayUrl:'chat_history3.html'},
+			{keywords:['今心'], title:'今心的个人博客', snippet:'今心（陈念）的WeBlog，记录生活点滴和心情。', href:'chen_nian_weblog.html', displayUrl:'chen_nian_weblog.html'},
+			{keywords:['草莓挞'], title:'陈念的聊天记录（2）', snippet:'聊天记录中提到草莓挞的相关内容。', href:'chat_history2.html', displayUrl:'chat_history2.html'},
+			{keywords:['许国成'], title:'清岚市联信通讯器材经营部', snippet:'许国成相关的商户信息和背景资料。', href:'store_info.html', displayUrl:'store_info.html'},
+			{keywords:['清岚市联信通讯器材经营部（个体工商户）','清岚市联信通讯器材经营部','店铺名清岚市联信通讯','联信通讯'], title:'清岚市联信通讯器材经营部官网', snippet:'联信通讯器材经营部的官方网站，提供各类通讯设备。', href:'store_website.html', displayUrl:'store_website.html'},
+			{keywords:['操作规范'], title:'系统操作规范', snippet:'内部操作规范文档，包含详细的管理流程说明。', href:'operation.html', displayUrl:'operation.html'},
+			{keywords:['货品对照指南'], title:'货品对照指南', snippet:'产品编号与规格的详细对照说明文档。', href:'product_guide.html', displayUrl:'product_guide.html'},
+			{keywords:['进口三星sg-160','sg-160'], title:'进口三星SG-160产品信息', snippet:'SG-160型号的详细产品规格和参数信息。', href:'product_info3.html', displayUrl:'product_info3.html'},
+			{keywords:['nx03800635'], title:'历史交易', snippet:'订单编号NX03800635的详细交易历史记录。', href:'order_history.html', displayUrl:'order_history.html'},
+			{keywords:['zhoulm'], title:'论坛讨论', snippet:'zhoulm在二手手机交易论坛发布的帖子。', href:'forum.html', displayUrl:'forum.html'},
+			{keywords:['zhoulm'], title:'zhoulm的个人博客', snippet:'zhoulm的WeBlog，记录个人生活和见闻。', href:'zhoulm_weblog.html', displayUrl:'zhoulm_weblog.html'},
+			{keywords:['二手手机同好会'], title:'二手手机交易群', snippet:'关于二手手机同好会的论坛讨论帖。', href:'post_discussion.html', displayUrl:'post_discussion.html'},
+			{keywords:['北桥','北桥市'], title:'北桥市城市介绍', snippet:'北桥市的详细介绍，包括城市概况、产业发展等信息。', href:'beiqiao.html', displayUrl:'beiqiao.html'},
+			{keywords:['北桥','北桥市'], title:'北桥市安河村民生新闻', snippet:'关于北桥市安河村发展现状的新闻报道。', href:'beiqiao_news.html', displayUrl:'beiqiao_news.html'},
+			{keywords:['北桥仓储','北桥物流','北桥物流仓储'], title:'北桥物流仓储搜索结果', snippet:'北桥市物流仓储相关企业和地址信息。', href:'warehouse_location.html', displayUrl:'warehouse_location.html'},
+		];
+
+		const input = document.getElementById('q');
+		const go = document.getElementById('go');
+		const results = document.getElementById('results');
+
+		function sanitize(t){return (t||'').trim();}
+		function isValid(t){ return t && t.length > 0; }
+
+		function renderResults(items, query){
+			results.innerHTML = '';
+			if(!items || items.length===0){
+				results.innerHTML = `<div class="noresult"><strong>未找到与 “${escapeHtml(query)}” 相关的结果。</strong><div style="margin-top:10px;color:var(--muted)">请检查拼写或尝试其他关键词。</div></div>`;
+				return;
+			}
+			const meta = document.createElement('div');
+			meta.className = 'meta';
+			meta.textContent = `${items.length} 条结果`; 
+			results.appendChild(meta);
+
+			items.forEach(it=>{
+				const el = document.createElement('article');
+				el.className = 'result';
+				el.innerHTML = `
+					<a class="title" href="${it.href}">${escapeHtml(it.title)}</a>
+				`;
+				results.appendChild(el);
+			});
+		}
+
+		function escapeHtml(s){return String(s).replace(/[&"'<>]/g, c=>({
+			'&':'&amp;','"':'&quot;','\'':'&#39;','<':'&lt;','>':'&gt;'
+		})[c]);}
+
+		function searchOnce(){
+			const raw = sanitize(input.value);
+			if(!raw){ results.innerHTML = '<div class="noresult">请输入关键词后搜索。</div>'; return; }
+			const q = raw.toLowerCase();
+
+			// exact match only
+			const matched = data.filter(item=> item.keywords.some(k => k.toLowerCase()===q) );
+
+			renderResults(matched, raw);
+		}
+
+		go.addEventListener('click', searchOnce);
+		input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); searchOnce(); } });
+
+		// show empty state on load
+		results.innerHTML = '<div class="noresult">输入关键词并搜索，或浏览页面以获取线索。</div>';
+	</script>
+</body>
+</html>

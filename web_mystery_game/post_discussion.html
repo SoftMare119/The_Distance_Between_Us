@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二手手机交易论坛</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0066cc;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --border: #e5e7eb;
+      --hover: #f0f3fb;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .back-btn {
+      padding: 8px 16px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .post-container {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .post-header {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .author-info {
+      flex: 1;
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .post-time {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .post-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .post-content {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .post-stats {
+      display: flex;
+      gap: 20px;
+      font-size: 14px;
+      color: var(--muted);
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .comments-section {
+      margin-top: 30px;
+    }
+
+    .comments-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .comment-form {
+      background-color: var(--hover);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background-color: #d1d5db;
+    }
+
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .comment {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .comment-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+
+    .comment-content {
+      flex: 1;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .user-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .user-location {
+      font-size: 12px;
+      color: var(--muted);
+      background: #eef2ff;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .comment-author {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .comment-time {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .comment-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .comment-actions {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .action-link {
+      color: var(--primary);
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .action-link:hover {
+      opacity: 0.7;
+    }
+
+    .load-more {
+      text-align: center;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .load-more-btn {
+      padding: 10px 24px;
+      background-color: var(--hover);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .load-more-btn:hover {
+      background-color: var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .post-title {
+        font-size: 20px;
+      }
+
+      .post-header {
+        gap: 12px;
+      }
+
+      .form-buttons {
+        flex-direction: column;
+      }
+
+      .form-buttons .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">二手手机交易</div>
+      <a href="javascript:history.back()" class="back-btn">返回</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 帖子主体 -->
+    <div class="post-container">
+      <div class="post-header">
+        <div class="author-avatar">小</div>
+        <div class="author-info">
+          <div class="user-meta">
+            <span class="author-name">小张同学</span>
+            <span class="user-location">IP属地：云中市</span>
+          </div>
+          <span class="post-time">2025年8月20日 10:15</span>
+        </div>
+      </div>
+
+      <h1 class="post-title">请问有人知道二手手机同好会吗？</h1>
+
+      <div class="post-content">
+        <p>隔壁"二手手机同好会"跟我们组有什么区别吗？有没有了解的朋友能介绍一下？</p>
+      </div>
+
+      <div class="post-stats">
+        <div class="stat-item">👁️ 浏览: 68</div>
+        <div class="stat-item">💬 回复: 4</div>
+        <div class="stat-item">👍 点赞: 1</div>
+      </div>
+    </div>
+
+    <!-- 评论区 -->
+    <div class="comments-section">
+      <h2 class="comments-title">网友评论 (4)</h2>
+
+      <!-- 评论表单 -->
+      <div class="comment-form">
+        <div class="form-group">
+          <label>昵称</label>
+          <input type="text" placeholder="请输入您的昵称">
+        </div>
+        <div class="form-group">
+          <label>评论内容</label>
+          <textarea placeholder="请输入您的评论..."></textarea>
+        </div>
+        <div class="form-buttons">
+          <button class="btn btn-secondary">取消</button>
+          <button class="btn btn-primary">发送评论</button>
+        </div>
+      </div>
+
+      <!-- 评论列表 -->
+      <div class="comments-list">
+        <div class="comment">
+          <div class="comment-avatar">王</div>
+          <div class="comment-content">
+            <div class="comment-header">
+              <div class="user-meta">
+                <span class="comment-author">王中王</span>
+                <span class="user-location">IP属地：临川市</span>
+              </div>
+              <span class="comment-time">2025年8月20日 11:30</span>
+            </div>
+            <div class="comment-text">
+              同问，之前想出掉一台二手机申请加入过那个论坛，但是没通过。具体怎么加入我也不太清楚。
+            </div>
+            <div class="comment-actions">
+              <span class="action-link">👍 (12)</span>
+              <span class="action-link">回复</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comment">
+          <div class="comment-avatar">p</div>
+          <div class="comment-content">
+            <div class="comment-header">
+              <div class="user-meta">
+                <span class="comment-author">p皮皮</span>
+                <span class="user-location">IP属地：星港市</span>
+              </div>
+              <span class="comment-time">2025年8月20日 12:45</span>
+            </div>
+            <div class="comment-text">
+              我在里面，但是有些帖子看着奇奇怪怪的，感觉不像是正规的交易论坛
+            </div>
+            <div class="comment-actions">
+              <span class="action-link">👍 (5)</span>
+              <span class="action-link">回复</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comment">
+          <div class="comment-avatar">我</div>
+          <div class="comment-content">
+            <div class="comment-header">
+              <div class="user-meta">
+                <span class="comment-author">我是一只小小鸟</span>
+                <span class="user-location">IP属地：南浦市</span>
+              </div>
+              <span class="comment-time">2025年8月20日 14:20</span>
+            </div>
+            <div class="comment-text">
+              之前里面有人想要苹果手机，我正好有一台苹果13，结果私信贴主被拉黑了，感觉不太靠谱。
+            </div>
+            <div class="comment-actions">
+              <span class="action-link">👍 (0)</span>
+              <span class="action-link">回复</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comment">
+          <div class="comment-avatar">火</div>
+          <div class="comment-content">
+            <div class="comment-header">
+              <div class="user-meta">
+                <span class="comment-author">火星人</span>
+                <span class="user-location">IP属地：北桥市</span>
+              </div>
+              <span class="comment-time">2025年8月20日 15:50</span>
+            </div>
+            <div class="comment-text">
+              那个同好会好像是我一个老乡创建的，我只知道他是做物流仓储的，不知道是不是做生意有门路卖手机了
+            </div>
+            <div class="comment-actions">
+              <span class="action-link">👍 (6)</span>
+              <span class="action-link">回复</span>
+            </div>
+          </div>
+        </div>
+
+      <div class="load-more">
+        <button class="load-more-btn">加载更多评论</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

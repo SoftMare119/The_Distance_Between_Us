@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>清岚市联信通讯 — 手机店</title>
+  <style>
+    :root{--accent:#0066cc;--bg:#f5f7fc;--card:#fff;--muted:#666}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Helvetica Neue',Arial;background:var(--bg);color:#111}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+    /* Navigation */
+    nav{background:var(--card);padding:12px 0;border-bottom:1px solid #eef0f6;position:sticky;top:0;z-index:100}
+    nav .wrap{display:flex;justify-content:space-between;align-items:center}
+    .logo{font-weight:700;font-size:18px;color:var(--accent)}
+    nav ul{list-style:none;margin:0;padding:0;display:flex;gap:20px}
+    nav a{text-decoration:none;color:var(--muted);transition:color 0.2s}
+    nav a:hover{color:var(--accent)}
+
+    /* Hero */
+    .hero{background:linear-gradient(135deg,var(--accent),#0051a8);color:#fff;padding:60px 0;text-align:center}
+    .hero h1{margin:0;font-size:32px}
+    .hero p{margin:6px 0 0;font-size:16px;opacity:0.9}
+
+    /* Sections */
+    section{padding:40px 0;border-bottom:1px solid #eef0f6}
+    section h2{font-size:22px;margin:0 0 20px;color:#111}
+
+    /* Shop Info */
+    .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+    .info-card{background:var(--card);padding:20px;border-radius:8px;border:1px solid #eef0f6}
+    .info-card h3{margin:0 0 8px;font-size:16px;color:var(--accent)}
+    .info-card p{margin:0;color:var(--muted);line-height:1.6}
+
+    /* Hours */
+    .hours-list{background:var(--card);padding:20px;border-radius:8px}
+    .hour-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #eef0f6}
+    .hour-row:last-child{border-bottom:0}
+    .day{font-weight:600}
+    .time{color:var(--muted)}
+
+    /* Products */
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+    .product-card{background:var(--card);border-radius:8px;overflow:hidden;border:1px solid #eef0f6;transition:transform 0.2s}
+    .product-card:hover{transform:translateY(-4px)}
+    .product-img{width:100%;height:180px;background:#f0f3fb;display:flex;align-items:center;justify-content:center;font-size:48px}
+    .product-info{padding:12px}
+    .product-name{font-weight:600;margin:0}
+    .product-price{color:var(--accent);font-weight:700;margin:6px 0 0}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .contact-item{background:var(--card);padding:20px;border-radius:8px}
+    .contact-item h3{margin:0 0 8px;color:var(--accent)}
+    .contact-item p{margin:0;color:var(--muted)}
+    .btn{display:inline-block;margin-top:12px;padding:10px 20px;background:var(--accent);color:#fff;text-decoration:none;border-radius:6px;transition:background 0.2s}
+    .btn:hover{background:#0052a3}
+
+    /* Footer */
+    footer{background:#f0f3fb;padding:20px;text-align:center;color:var(--muted)}
+
+    @media (max-width:720px){
+      .hero h1{font-size:24px}
+      nav ul{gap:12px;font-size:14px}
+      .contact-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="wrap">
+      <div class="logo">清岚市联信通讯</div>
+      <ul>
+        <li><a href="#shop">店铺信息</a></li>
+        <li><a href="#hours">营业时间</a></li>
+        <li><a href="#new">今日上新</a></li>
+        <li><a href="#contact">联系我们</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="wrap">
+      <h1>清岚市联信通讯器材经营部</h1>
+      <p>您身边的手机、通讯器材专家</p>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <!-- 店铺信息 -->
+    <section id="shop">
+      <h2>店铺信息</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>📍 地址</h3>
+          <p>某市某区某街道100号</p>
+        </div>
+        <div class="info-card">
+          <h3>👤 经营者</h3>
+          <p>许国成</p>
+        </div>
+        <div class="info-card">
+          <h3>🏪 成立日期</h3>
+          <p>2025年1月29日</p>
+        </div>
+        <div class="info-card">
+          <h3>✅ 经营状态</h3>
+          <p>营业中</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 营业时间 -->
+    <section id="hours">
+      <h2>营业时间</h2>
+      <div class="hours-list">
+        <div class="hour-row"><span class="day">周六</span><span class="time">19:00 - 22:00</span></div>
+        <div class="hour-row"><span class="day">周日</span><span class="time">19:00 - 20:00</span></div>
+      </div>
+    </section>
+
+    <!-- 今日上新 -->
+    <section id="new">
+      <h2>今日上新</h2>
+      <div class="products-grid" id="productsGrid">
+        <!-- Products loaded from JSON -->
+      </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact">
+      <h2>联系我们</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <h3>📞 联系方式</h3>
+          <p>欢迎致电或访问我们的店铺，了解最新产品和优惠信息。</p>
+          <p>我们的专业团队随时为您服务。</p>
+        </div>
+        <div class="contact-item">
+          <h3>🛒 订货平台</h3>
+          <p>如需查看限量商品目录，请访问我们的订货网站。</p>
+          <a href="order_website.html" class="btn">进入订货网站</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 清岚市联信通讯器材经营部 | 地址：某市某区某街道100号</p>
+  </footer>
+
+  <script>
+    // Load products from JSON
+    fetch('store_products.json').then(r=>r.json()).then(data=>{
+      const grid = document.getElementById('productsGrid');
+      if(Array.isArray(data)){
+        grid.innerHTML = data.map(p=>`
+          <div class="product-card">
+            <div class="product-img">${p.emoji||'📱'}</div>
+            <div class="product-info">
+              <p class="product-name">${p.name}</p>
+              <p class="product-price">¥${p.price}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    }).catch(err=>console.error('Failed to load products', err));
+  </script>
+</body>
+</html>

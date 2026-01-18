@@ -1,0 +1,18 @@
+{
+  "name": "清岚市联信通讯器材经营部（个体工商户）",
+  "owner": "许国成",
+  "capital": "人民币1万元",
+  "regNo": "9144XXXXXXXXXXXX",
+  "founded": "2025-01-29",
+  "address": "某市某区某街道100号",
+  "status": "营业",
+  "website": "https://lianxin.example.com",
+  "scope": "通讯器材销售；电子产品零售与维修；配件销售。",
+  "partners": [
+    {"name":"许国成","role":"经营者"}
+  ],
+  "events": [
+    {"date":"2025-01-29","desc":"成立，法定代表人许国成，注册资本人民币1万元。"},
+    {"date":"2025-06-15","desc":"经营范围变更，新增电子产品零售与维修业务。"}
+  ]
+}

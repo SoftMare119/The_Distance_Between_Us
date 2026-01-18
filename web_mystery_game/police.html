@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>报警</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+      min-height: 100vh;
+    }
+
+    .content {
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 300;
+      color: #ffffff;
+      letter-spacing: 4px;
+      text-align: center;
+      margin-bottom: 60px;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 17px;
+      margin-bottom: 32px;
+      color: #b8b8b8;
+      text-align: left;
+      letter-spacing: 0.5px;
+    }
+
+    p.emphasis {
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 19px;
+      margin-top: 48px;
+      margin-bottom: 48px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .form-section {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 40px;
+      margin: 50px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 16px;
+      color: #999;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0a0a0a;
+      border: 1px solid #444;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #666;
+      background: #111;
+    }
+
+    .form-group input::placeholder {
+      color: #555;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #1a1a1a;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 4px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+
+    .submit-btn:hover {
+      background: #222;
+      border-color: #777;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 14px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .hint {
+      color: #666;
+      font-size: 14px;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .back-link a {
+      display: inline-block;
+      padding: 12px 32px;
+      background: #1a1a1a;
+      color: #999;
+      text-decoration: none;
+      border: 1px solid #333;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .back-link a:hover {
+      background: #222;
+      border-color: #555;
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 60px 24px 80px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .form-section {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <h1>报警</h1>
+
+      <p class="emphasis">你已经掌握了足够的证据。</p>
+
+      <p>是时候做出决定了。</p>
+      <p>你拨通了报警电话，警方需要你提供确切的地址信息。</p>
+
+      <div class="form-section">
+        <form id="policeForm">
+          <div class="form-group">
+            <label for="location">请输入陈念所在地：</label>
+            <input 
+              type="text" 
+              id="location" 
+              name="location" 
+              placeholder="输入详细地址..." 
+              autocomplete="off"
+              required
+            >
+            <div class="hint">请输入完整的详细地址</div>
+            <div class="error-message" id="locationError">地址不正确，请仔细核对你的线索</div>
+          </div>
+
+          <button type="submit" class="submit-btn">提交</button>
+        </form>
+      </div>
+
+      <div class="back-link">
+        <a href="javascript:history.back()">返回</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('policeForm');
+    const locationInput = document.getElementById('location');
+    const errorMessage = document.getElementById('locationError');
+
+    // 正确答案（去除所有空格进行比较）
+    const correctLocation = '海州市青梧区槐安路217号';
+
+    // 第二个线索的正确答案
+    const correctClue = '北桥市旧港区临水街17号附2号';
+
+    function normalizeText(text) {
+      // 移除所有空格、全角空格和特殊字符，统一格式
+      return text.replace(/\s+/g, '').toLowerCase();
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const userInput = locationInput.value.trim();
+      const normalizedInput = normalizeText(userInput);
+      const normalizedCorrect = normalizeText(correctLocation);
+
+      if (normalizedInput === normalizedCorrect) {
+        // 地址正确，询问是否有其他线索
+        const hasMoreClues = confirm('你是否还有其他线索？');
+        
+        if (hasMoreClues) {
+          // 玩家选择"是"，弹出输入框要求输入线索
+          const clueInput = prompt('请输入线索：');
+          
+          if (clueInput) {
+            const normalizedClue = normalizeText(clueInput);
+            const normalizedCorrectClue = normalizeText(correctClue);
+            
+            if (normalizedClue === normalizedCorrectClue) {
+              // 线索正确，跳转到Good End
+              window.location.href = 'good_end1.html';
+            } else {
+              // 线索不正确，跳转到True End
+              alert('警方已前往你提供的第一个地址。');
+              window.location.href = 'true_end.html';
+            }
+          } else {
+            // 用户取消输入或输入为空，跳转到True End
+            window.location.href = 'true_end.html';
+          }
+        } else {
+          // 玩家选择"否"，跳转到True End
+          window.location.href = 'true_end.html';
+        }
+      } else {
+        // 地址错误，显示错误提示
+        errorMessage.style.display = 'block';
+        locationInput.style.borderColor = '#ff4444';
+        
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+          locationInput.style.borderColor = '#444';
+        }, 3000);
+      }
+    });
+
+    // 清除错误提示
+    locationInput.addEventListener('input', function() {
+      errorMessage.style.display = 'none';
+      locationInput.style.borderColor = '#444';
+    });
+  </script>
+</body>
+</html>

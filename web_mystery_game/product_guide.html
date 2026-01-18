@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>货品陈列</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --accent: #ff0000;
+      --bg: #0a0a0a;
+      --card: #1a1a1a;
+      --muted: #999999;
+      --border: #333333;
+      --glow: #ff0000;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: var(--bg);
+      color: #cccccc;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
+    }
+
+    header {
+      background-color: var(--card);
+      border-bottom: 2px solid var(--glow);
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--glow);
+      letter-spacing: 2px;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      background-color: var(--card);
+      color: var(--accent);
+      border: 1px solid var(--glow);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--glow);
+      letter-spacing: 2px;
+    }
+
+    .page-subtitle {
+      color: var(--muted);
+      margin-bottom: 40px;
+      font-size: 14px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--glow);
+      letter-spacing: 1px;
+    }
+
+    /* 第一部分：货品对照信息表 */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--card);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .info-table thead {
+      background-color: #0f0f0f;
+      border-bottom: 2px solid var(--glow);
+    }
+
+    .info-table th {
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 14px;
+      text-shadow: 0 0 5px var(--glow);
+      letter-spacing: 1px;
+    }
+
+    .info-table td {
+      padding: 15px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: #cccccc;
+    }
+
+    .info-table tbody tr:hover {
+      background-color: rgba(255, 0, 0, 0.05);
+    }
+
+    .info-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .highlight-cell {
+      color: var(--accent);
+      font-weight: 600;
+      text-shadow: 0 0 5px var(--glow);
+    }
+
+    /* 第二部分：货品卡片 */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+      border-color: var(--glow);
+      transform: translateY(-5px);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-id {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-shadow: 0 0 5px var(--glow);
+      letter-spacing: 1px;
+    }
+
+    .product-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 12px;
+      text-shadow: 0 0 8px var(--glow);
+    }
+
+    .product-detail {
+      font-size: 13px;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .product-detail strong {
+      color: #cccccc;
+    }
+
+    .product-footer {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .product-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .product-card:hover .product-link {
+      color: var(--glow);
+      text-shadow: 0 0 10px var(--glow);
+    }
+
+    .warning-box {
+      background-color: rgba(139, 0, 0, 0.15);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--danger);
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      color: #aaaaaa;
+      font-size: 13px;
+    }
+
+    .warning-box strong {
+      color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        font-size: 24px;
+      }
+
+      .info-table th,
+      .info-table td {
+        padding: 10px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">[PRODUCT DISPLAY] 货品陈列</div>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="page-title">货品陈列系统</h1>
+    <p class="page-subtitle">货品信息展示 - 点击货品查看详细信息</p>
+    <!-- 第一部分：具体货品 -->
+    <section class="section">
+      <h2 class="section-title">在库货品列表</h2>
+      <div class="products-grid">
+        <!-- 货品 1 -->
+        <a href="product_info1.html" class="product-card">
+          <div class="product-info">
+            <div class="product-name">进口华为sg-175</div>
+            <div class="product-footer">
+              <span class="product-link">查看详情 →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 货品 2 -->
+        <a href="product_info2.html" class="product-card">
+          <div class="product-info">
+            <div class="product-name">国产苹果sg-150</div>
+            <div class="product-footer">
+              <span class="product-link">查看详情 →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 第二部分：货品对照信息 -->
+    <section class="section">
+      <h2 class="section-title">货品对照信息</h2>
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>身高</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="highlight-cell">进口</span></td>
+            <td>苹果 （10-20）</td>
+            <td>sg</td>
+          </tr>
+          <tr>
+            <td><span class="highlight-cell">国产</span></td>
+            <td>华为 （20-30）</td>
+            <td>sg</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>三星 （30-40）</td>
+            <td>sg</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="warning-box">
+        <strong>提示：</strong>此表格仅显示部分在库货品。已出货订单请输入具体型号查找。
+      </div>
+    </section>
+  </main>
+</body>
+</html>
