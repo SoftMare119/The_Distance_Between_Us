@@ -97,7 +97,7 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
-    function escapeHtml(s){return String(s||'').replace(/[&"'<>]/g, c=>({'&':'&amp;','"':'&quot;','\' :'&#39;','<':'&lt;','>':'&gt;'})[c]);}
+    function escapeHtml(s){return String(s||'').replace(/[&"'<>]/g, c=>({'&':'&amp;','"':'&quot;','\' ':'&#39;','<':'&lt;','>':'&gt;'})[c]);}
 
     // load messages from external JSON file
     fetch('last_chat_history.json').then(r=>{
