@@ -105,6 +105,7 @@
       <div>
         <input type="password" id="adminPassword" placeholder="请输入管理员密码" autocomplete="off">
         <button class="btn" onclick="verifyAdminPassword()">进入</button>
+        <button class="btn" onclick="showPasswordHint()" style="background:#6c757d;margin-top:5px">忘记密码</button>
       </div>
     </div>
   </div>
@@ -219,6 +220,9 @@
       }
     }
 
+    function showPasswordHint(){
+      alert('密码提示：姓名+日期');
+    }
 
 
     function submitMessage(){
