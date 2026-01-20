@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>念念的WeBlog</title>
+  <title>heyitsnina's WeBlog</title>
   <style>
     :root{--bg:#f2f4f7;--card:#fff;--accent:#e9423a;--muted:#6b7280}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Helvetica Neue',Arial;background:var(--bg);color:#111}
@@ -46,10 +46,10 @@
   <div class="wrap">
     <header class="site">
       <div class="brand">
-        <div class="logo"><img src="pics/chen_nian_avatar.jpg" alt="念念"></div>
+        <div class="logo"><img src="pics/chen_nian_avatar.jpg" alt="Nina"></div>
         <div>
-          <h1>今心的WeBlog</h1>
-          <div class="time muted">不骄不躁，平常心面对每一天</div>
+          <h1>heyitsnina's WeBlog</h1>
+          <div class="time muted">Stay humble, stay grounded, face each day with peace</div>
         </div>
       </div>
       <div class="actions">
@@ -57,11 +57,11 @@
       </div>
     </header>
 
-    <section class="compose" aria-label="发布草稿">
-      <textarea placeholder="在此输入内容（此处仅为示例，实际内容请编辑 posts.json）" disabled>今天分享些什么呢？</textarea>
+    <section class="compose" aria-label="Publish draft">
+      <textarea placeholder="Enter content here (This is just an example, please edit posts.json for actual content)" disabled>What would you like to share today?</textarea>
       <div class="meta">
         <small class="time"></small>
-        <button class="btn" disabled>发布</button>
+        <button class="btn" disabled>Post</button>
       </div>
     </section>
 
@@ -69,7 +69,7 @@
       <!-- posts injected here -->
     </main>
 
-    <button id="loadMore" class="load-more">加载更多</button>
+    <button id="loadMore" class="load-more">Load More</button>
   </div>
 
   <script>
@@ -81,18 +81,18 @@
     // Utility to format time
     function timeAgo(ts){
       const diff = Math.floor((Date.now() - new Date(ts))/1000);
-      if(diff < 60) return diff + ' 秒前';
-      if(diff < 3600) return Math.floor(diff/60) + ' 分钟前';
-      if(diff < 86400) return Math.floor(diff/3600) + ' 小时前';
-      return Math.floor(diff/86400) + ' 天前';
+      if(diff < 60) return diff + ' seconds ago';
+      if(diff < 3600) return Math.floor(diff/60) + ' minutes ago';
+      if(diff < 86400) return Math.floor(diff/3600) + ' hours ago';
+      return Math.floor(diff/86400) + ' days ago';
     }
 
     // Format as concrete date/time
     function formatDate(ts){
       try{
-        // 如果 ts 已经是字符串格式（如 "2024-08-28 18:20"），直接返回
+        // If ts is already a string format (e.g., "2024-08-28 18:20"), return directly
         if(typeof ts === 'string') return ts;
-        // 否则作为 UTC 时间处理
+        // Otherwise, process as UTC time
         const d = new Date(ts);
         return d.getUTCFullYear() + '-' + 
                String(d.getUTCMonth()+1).padStart(2,'0') + '-' + 
@@ -113,7 +113,7 @@
           <div class="post-head"><div class="author">${escapeHtml(p.author.name)}</div><div class="time">· ${formatDate(p.time)}</div></div>
           <div class="content">${escapeHtml(p.content)}</div>
           ${p.images && p.images.length? `<div class="images">${p.images.map(u=>`<img src="${u}" alt="image">`).join('')}</div>` : ''}
-          <div class="post-actions">❤ ${p.likes || 0}  评论 ${p.comments || 0}  分享</div>
+          <div class="post-actions">❤ ${p.likes || 0}  Comments ${p.comments || 0}  Share</div>
         </div>
       `;
       return el;
@@ -140,13 +140,13 @@
       allPosts = data;
       if(!Array.isArray(allPosts)) allPosts = [];
       if(allPosts.length === 0){
-        document.getElementById('feed').innerHTML = '<p style="color:var(--muted)">当前没有文章。请编辑 posts.json 添加你的帖子。</p>';
+        document.getElementById('feed').innerHTML = '<p style="color:var(--muted)">No posts yet. Please edit posts.json to add your posts.</p>';
         document.getElementById('loadMore').style.display = 'none';
         return;
       }
       appendNextPage();
     }).catch(err=>{
-      document.getElementById('feed').innerHTML = '<p style="color:var(--muted)">加载文章失败，请确保 posts.json 存在且格式正确。</p>';
+      document.getElementById('feed').innerHTML = '<p style="color:var(--muted)">Failed to load posts. Please ensure posts.json exists and is properly formatted.</p>';
       document.getElementById('loadMore').style.display = 'none';
       console.error(err);
     });
