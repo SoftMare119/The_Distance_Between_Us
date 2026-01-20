@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>工商信息 — 许国成 经营店铺</title>
+  <title>Company Information — Jason Wu</title>
   <style>
     :root{--bg:#f5f7fb;--card:#fff;--accent:#0b66ff;--muted:#6b7280}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Helvetica Neue',Arial;background:var(--bg);color:#111}
@@ -29,35 +29,35 @@
     <header class="header">
       <div class="logo">企</div>
       <div>
-        <h1>清岚市联信通讯器材经营部（个体工商户）</h1>
+        <h1>PrimeLink Telecom LTD</h1>
       </div>
     </header>
 
     <section class="card grid">
       <div class="main">
-        <h2>基本信息</h2>
+        <h2>Overview</h2>
         <div id="basicInfo"></div>
 
-        <h2 style="margin-top:14px">经营范围</h2>
+        <h2 style="margin-top:14px">Business Scope</h2>
         <div id="scope" style="padding:8px 0;color:#222"></div>
 
-        <h2 style="margin-top:14px">备案与变更</h2>
+        <h2 style="margin-top:14px">Registration & Changes</h2>
         <div id="events"></div>
       </div>
 
       <aside class="sidebar">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <div class="badge" id="status">营业</div>
-          <div style="color:var(--muted)">注册号：<span id="regNo"></span></div>
+          <div class="badge" id="status">Active</div>
+          <div style="color:var(--muted)">Registration No.: <span id="regNo"></span></div>
         </div>
 
         <div class="card" style="margin-top:12px;">
-          <h3 style="margin:0 0 8px 0">联系方式</h3>
+          <h3 style="margin:0 0 8px 0">Contact Information</h3>
           <div id="contact"></div>
         </div>
 
         <div class="card partners" style="margin-top:12px;">
-          <h3 style="margin:0 0 8px 0">关联人员</h3>
+          <h3 style="margin:0 0 8px 0">Associated Personnel</h3>
           <div id="partners"></div>
         </div>
       </aside>
@@ -80,20 +80,20 @@
       status.textContent = data.status || '';
 
       const rows = [
-        ['企业名称', data.name],
-        ['法定代表人', data.owner],
-        ['资金数额', data.capital],
-        ['成立日期', data.founded],
-        ['注册地址', data.address],
-        ['经营状态', data.status]
+        ['Company Name', data.name],
+        ['Legal Representative', data.owner],
+        ['Registered Capital', data.capital],
+        ['Established Date', data.founded],
+        ['Registered Address', data.address],
+        ['Company Status', data.status]
       ];
       basic.innerHTML = rows.map(r=>`<div class="field"><div class="label">${r[0]}</div><div class="value">${r[1]||''}</div></div>`).join('');
 
       scope.textContent = data.scope || '';
 
       // Render website (clickable) and address. Phone/email removed per request.
-      const websiteHtml = `官网：<a href="store_website.html" target="_blank" rel="noopener">联信通讯</a><br>`;
-      contact.innerHTML = websiteHtml + `地址：${data.address||'—'}`;
+      const websiteHtml = `Website: <a href="store_website.html" target="_blank" rel="noopener">PrimeLink Telecom</a><br>`;
+      contact.innerHTML = websiteHtml + `Address: ${data.address||'—'}`;
 
       if(Array.isArray(data.partners)){
         partnersEl.innerHTML = data.partners.map(p=>`<div class="partner"><div style="width:40px;height:40px;border-radius:6px;background:#f0f3fb;display:flex;align-items:center;justify-content:center">${p.name[0]}</div><div><div style="font-weight:700">${p.name}</div><div style="color:var(--muted);font-size:13px">${p.role}</div></div></div>`).join('');
@@ -104,7 +104,7 @@
       }
     }).catch(err=>{
       console.error('failed to load store_info.json', err);
-      document.getElementById('basicInfo').innerHTML = '<p style="color:var(--muted)">无法加载数据，请确保 store_info.json 存在。</p>';
+      document.getElementById('basicInfo').innerHTML = '<p style="color:var(--muted)">Unable to load data. Please ensure store_info.json exists.</p>';
     });
   </script>
 </body>

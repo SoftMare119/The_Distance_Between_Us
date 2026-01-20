@@ -1,6 +1,6 @@
 [
   {
-    "name": "iPhone 15 Pro",
+    "name": "IPhone 15 Pro",
     "price": "7999",
     "emoji": "📱"
   },
@@ -10,22 +10,22 @@
     "emoji": "📱"
   },
   {
-    "name": "小米 14 Ultra",
+    "name": "Xiaomi 14 Ultra",
     "price": "5499",
     "emoji": "📱"
   },
   {
-    "name": "无线耳机",
+    "name": "Wireless Earbuds",
     "price": "899",
     "emoji": "🎧"
   },
   {
-    "name": "充电器套装",
+    "name": "Charger Set",
     "price": "199",
     "emoji": "🔌"
   },
   {
-    "name": "手机膜贴膜",
+    "name": "Screen Protector",
     "price": "29",
     "emoji": "🛡️"
   }

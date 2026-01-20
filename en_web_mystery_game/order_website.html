@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>联信通讯 — 订货网站</title>
+  <title>PrimeLink Telecom — Order Website</title>
   <style>
     :root{--accent:#0066cc;--success:#28a745;--bg:#f5f7fc;--card:#fff;--muted:#666}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Helvetica Neue',Arial;background:var(--bg);color:#111}
@@ -75,96 +75,76 @@
   <!-- Header -->
   <header>
     <div class="wrap" style="width:100%;display:flex;justify-content:space-between;align-items:center">
-      <div class="logo">联信通讯 订货平台</div>
+      <div class="logo">PrimeLink Telecom Order Platform</div>
       <div class="auth-panel">
-        <button class="btn-auth primary" onclick="showAdminEntrance()">管理员入口</button>
+        <button class="btn-auth primary" onclick="showAdminEntrance()">Admin Login</button>
       </div>
     </div>
   </header>
 
-  <!-- Login Modal (Member) -->
-  <div class="modal" id="loginModal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2 id="loginTitle">会员登录</h2>
-      <div>
-        <input type="text" id="username" placeholder="用户名" autocomplete="off">
-        <input type="password" id="password" placeholder="密码" autocomplete="off">
-        <button class="btn" onclick="login()">登录</button>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px">
-        </p>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Admin Password Modal -->
   <div class="modal" id="adminModal">
     <div class="modal-content">
       <span class="close" onclick="closeAdminModal()">&times;</span>
-      <h2>管理员入口</h2>
+      <h2>Admin Login</h2>
       <div>
-        <input type="password" id="adminPassword" placeholder="请输入管理员密码" autocomplete="off">
-        <button class="btn" onclick="verifyAdminPassword()">进入</button>
+        <input type="password" id="adminPassword" placeholder="Please enter admin password" autocomplete="off">
+        <button class="btn" onclick="verifyAdminPassword()">Enter</button>
+        <button class="btn" onclick="showPasswordHint()" style="background:#6c757d;margin-top:8px">Forgot Password</button>
+        <p id="passwordHint" style="font-size:13px;color:var(--accent);margin-top:12px;display:none">Hint: lowercase letters+numbers</p>
       </div>
     </div>
   </div>
 
   <main class="wrap content">
-    <!-- 产品陈列 -->
+    <!-- Products Display -->
     <section id="productsSection">
-      <h2>📱 产品陈列</h2>
+      <h2>📱 Products</h2>
       <div class="products-grid" id="productsGrid"></div>
     </section>
 
-    <!-- 会员专享内容 -->
-    <section class="member-only" id="memberOnly">
-      <h3>🎁 会员专享</h3>
-      <p>尊敬的会员，您可以享受以下权益：</p>
-      <ul>
-        <li>批量订购享受优惠价格</li>
-        <li>专属客服支持</li>
-        <li>订单管理与配送跟踪</li>
-      </ul>
-    </section>
 
-    <!-- 管理员专享内容 -->
+
+    <!-- Admin Exclusive Content -->
     <section class="admin-only" id="adminOnly">
-      <h3>⚙️ 管理员面板</h3>
-      <p>管理员权限：查看、管理所有订单和留言。</p>
+      <h3>⚙️ Admin Panel</h3>
+      <p>Admin permissons: View and manage all orders and messages.</p>
     </section>
 
-    <!-- 管理员专享内容 -->
+    <!-- Admin Exclusive Content -->
     <section class="admin-only" id="adminOnly">
-      <h3>⚙️ 管理员面板</h3>
-      <p>管理员权限：查看、管理所有订单和留言。</p>
+      <h3>⚙️ Admin Panel</h3>
+      <p>Admin permission: View and manage all orders and messages.</p>
     </section>
 
-    <!-- 订货留言区 -->
+    <!-- Order Message Section -->
     <section>
-      <h2>📝 订货留言</h2>
+      <h2>📝 Order Messages</h2>
       <div class="messages-section">
         <div class="message-form">
-          <h3>留言订货</h3>
+          <h3>Place Order Message</h3>
           <div class="form-group">
-            <label>您的名字</label>
-            <input type="text" id="msgName" placeholder="请输入您的名字">
+            <label>Your Name</label>
+            <input type="text" id="msgName" placeholder="Please enter your name">
           </div>
           <div class="form-group">
-            <label>联系电话</label>
-            <input type="tel" id="msgPhone" placeholder="请输入联系电话">
+            <label>Contact Phone</label>
+            <input type="tel" id="msgPhone" placeholder="Please enter contact phone">
           </div>
           <div class="form-group">
-            <label>订货内容</label>
-            <textarea id="msgContent" placeholder="请详细描述您的订货需求..."></textarea>
+            <label>Order Details</label>
+            <textarea id="msgContent" placeholder="Please describe your order requirements in detail..."></textarea>
           </div>
-          <button class="btn-submit" onclick="submitMessage()">提交订货留言</button>
+          <button class="btn-submit" onclick="submitMessage()">Submit Order Message</button>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 清岚市联信通讯器材经营部</p>
+    <p>&copy; 2025 PrimeLink Telecom LTD</p>
   </footer>
 
   <script>
@@ -182,10 +162,10 @@
             <div class="product-img">${p.emoji||'📱'}</div>
             <div class="product-name">${p.name}</div>
             <div class="product-price">¥${p.price}</div>
-            <div class="product-stock">库存：${p.stock||'充足'}</div>
+            <div class="product-stock">Stock: ${p.stock||'Available'}</div>
             <div class="product-qty">
               <input type="number" class="qty-input" id="qty${idx}" value="1" min="1">
-              <button class="btn-add" onclick="addToOrder(${idx})">加入订单</button>
+              <button class="btn-add" onclick="addToOrder(${idx})">Add to Order</button>
             </div>
           </div>
         `).join('');
@@ -193,7 +173,7 @@
     }
 
     function addToOrder(idx){
-      alert('已将产品加入订单，请在下方填写订货留言。');
+      alert('Product added to order. Please fill in the order message form below.');
     }
 
     // Auth
@@ -214,9 +194,14 @@
         closeAdminModal();
         window.location.href = 'real_order_website.html';
       } else {
-        alert('密码错误，请重试');
+        alert('Incorrect password, please try again');
         document.getElementById('adminPassword').value = '';
       }
+    }
+
+    function showPasswordHint(){
+      const hint = document.getElementById('passwordHint');
+      hint.style.display = 'block';
     }
 
 
@@ -227,7 +212,7 @@
       const content = document.getElementById('msgContent').value;
 
       if(!name || !phone || !content){
-        alert('请填写所有字段');
+        alert('Please fill in all fields');
         return;
       }
 
@@ -237,8 +222,8 @@
         phone,
         content,
         timestamp: new Date().toISOString(),
-        time: new Date().toLocaleString('zh-CN'),
-        user: currentUser || '匿名',
+        time: new Date().toLocaleString('en-US'),
+        user: currentUser || 'Anonymous',
         processed: false
       };
 
@@ -249,7 +234,7 @@
       document.getElementById('msgPhone').value = '';
       document.getElementById('msgContent').value = '';
 
-      alert('订货留言已提交，感谢您的订单！');
+      alert('Order message submitted successfully. Thank you for your order!');
     }
 
     function renderMessages(){
@@ -257,7 +242,7 @@
       list.innerHTML = messages.map(m=>`
         <div class="message-item">
           <div class="message-meta">
-            <strong>${m.name}</strong> (${m.phone}) | ${m.time} | 提交者: ${m.user}
+            <strong>${m.name}</strong> (${m.phone}) | ${m.time} | Submitted by: ${m.user}
           </div>
           <div class="message-content">${m.content}</div>
         </div>
@@ -267,7 +252,7 @@
     // Init
     loadProducts();
     
-    // 回车键提交密码
+    // Enter key to submit password
     document.getElementById('adminPassword').addEventListener('keypress', function(e){
       if(e.key === 'Enter'){
         verifyAdminPassword();
