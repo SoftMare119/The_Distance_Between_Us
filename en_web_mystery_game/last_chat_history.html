@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>聊天记录2</title>
+  <title>Last Chat History</title>
   <style>
     :root{--bg:#eef2f7;--me:#d1e8ff;--her:#fff;--muted:#6b7280}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Helvetica Neue',Arial;background:var(--bg)}
@@ -40,10 +40,10 @@
 <body>
   <div class="container" role="application">
     <div class="header">
-      <div class="avatar"><img src="pics/chen_nian_avatar.jpg" alt="陈念"></div>
+      <div class="avatar"><img src="pics/chen_nian_avatar.jpg" alt="Chen Nian"></div>
       <div class="meta">
-        <h2>陈念</h2>
-        <p>最后在线：2026-01-09</p>
+        <h2>Nina Chen</h2>
+        <p>Last online: 2026-01-09</p>
       </div>
       <div class="actions"></div>
     </div>
@@ -54,7 +54,7 @@
 
     <div class="composer" aria-hidden="true">
       <input placeholder="" disabled>
-      <button disabled>发送</button>
+      <button disabled>Send</button>
     </div>
   </div>
 
@@ -64,9 +64,9 @@
     const container = document.getElementById('messages');
 
     function formatDate(ts){
-      // 如果 ts 已经是字符串格式（如 "2024-08-28 18:20"），直接返回
+      // If ts is already a string format (e.g., "2026-01-09 14:30"), return directly
       if(typeof ts === 'string') return ts;
-      // 否则作为 UTC 时间处理
+      // Otherwise, process as UTC time
       const d = new Date(ts);
       return d.getUTCFullYear() + '-' + 
              String(d.getUTCMonth()+1).padStart(2,'0') + '-' + 
@@ -80,11 +80,11 @@
       messages.forEach(m=>{
         const el = document.createElement('div');
         el.className = 'msg ' + (m.who==='me'? 'me' : 'you');
-        const avatarHtml = m.who==='me' ? '' : '<div class="avatar-sm"><img src="pics/chen_nian_avatar.jpg" alt="陈念"></div>';
+        const avatarHtml = m.who==='me' ? '' : '<div class="avatar-sm"><img src="pics/chen_nian_avatar.jpg" alt="Nina Chen"></div>';
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
         bubble.innerHTML = `<div>${escapeHtml(m.text || '')}</div>` + (m.images? m.images.map(u=>`<img src="${u}" alt="image">`).join('') : '') + `<span class="time">${formatDate(m.time)}</span>`;
-        if(m.who==='me'){
+        if(m.who==='me'){ 
           el.appendChild(bubble);
         } else {
           el.innerHTML = avatarHtml;
@@ -97,10 +97,10 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
-    function escapeHtml(s){return String(s||'').replace(/[&"'<>]/g, c=>({'&':'&amp;','"':'&quot;','\'':'&#39;','<':'&lt;','>':'&gt;'})[c]);}
+    function escapeHtml(s){return String(s||'').replace(/[&"'<>]/g, c=>({'&':'&amp;','"':'&quot;','\' ':'&#39;','<':'&lt;','>':'&gt;'})[c]);}
 
     // load messages from external JSON file
-    fetch('chat_history2.json').then(r=>{
+    fetch('last_chat_history.json').then(r=>{
       if(!r.ok) throw new Error('fetch failed');
       return r.json();
     }).then(data=>{
@@ -109,7 +109,7 @@
     }).catch(err=>{
       console.error('Failed to load chat.json', err);
       // fallback: show empty state
-      container.innerHTML = '<p style="color:var(--muted);text-align:center">无法加载聊天记录，请检查 chat.json 是否存在且格式正确。</p>';
+      container.innerHTML = '<p style="color:var(--muted);text-align:center">Unable to load chat history. Please check if chat.json exists and is properly formatted.</p>';
     });
   </script>
 </body>

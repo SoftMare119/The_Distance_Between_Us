@@ -1,0 +1,46 @@
+[
+  {"who":"me","time":"2025-12-16 13:40","text":"What time do you get off work today?"},
+  {"who":"you","time":"2025-12-16 13:41","text":"Around 6 PM if nothing unexpected happens."},
+  {"who":"you","time":"2025-12-16 13:42","text":"Hope they don't dump work on me before I leave 😓"},
+  {"who":"me","time":"2025-12-16 13:43","text":"Wanna go for steak after work?"},
+  {"who":"me","time":"2025-12-16 13:44","text":"It's 30% off on Tuesdays 😁"},
+  {"who":"you","time":"2025-12-16 13:45","text":"Hahaha I knew you were planning to ask me out for food!"},
+  {"who":"you","time":"2025-12-16 13:46","text":"Sure! ☺️"},
+
+  {"who":"you","time":"2025-12-18 20:32","text":"What are you planning to do on Friday night?"},
+  {"who":"me","time":"2025-12-18 20:33","text":"Nothing planned yet, any idea?"},
+  {"who":"you","time":"2025-12-18 20:34","text":"I don't have plans either"},
+  {"who":"you","time":"2025-12-18 20:35","text":"But it's going to rain tomorrow, don't really feel like going out 😢"},
+  {"who":"me","time":"2025-12-18 20:36","text":"Rain is really annoying"},
+  {"who":"me","time":"2025-12-18 20:37","text":"How about coming over to my place, we can order takeout and watch a movie?"},
+  {"who":"you","time":"2025-12-18 20:38","text":"Sounds good!"},
+  {"who":"you","time":"2025-12-18 20:39","text":"Deal!"},
+
+  {"who":"you","time":"2025-12-21 09:27","text":"Starting my annual leave tomorrow haha. 😁"},
+  {"who":"me","time":"2025-12-21 09:28","text":"And I have to work until the end of the year 😓"},
+  {"who":"me","time":"2025-12-21 09:29","text":"What are you planning to do during your holiday?"},
+  {"who":"you","time":"2025-12-21 09:30","text":"Haven't decided yet, first let me sleep like there's no tomorrow!"},
+
+  {"who":"you","time":"2025-12-23 22:53","text":"Something came up at home. I won't be in touch for a bit."},
+  {"who":"me","time":"2025-12-23 22:54","text":"Okay, is it your uncle?"},
+  {"who":"me","time":"2025-12-23 22:55","text":"Take care of it first, hope everything's okay 🙏"},
+
+  {"who":"me","time":"2025-12-27 17:53","text":"Nina, how are you?"},
+  {"who":"me","time":"2025-12-27 17:54","text":"How are things going at home?"},
+
+  {"who":"me","time":"2025-12-29 10:37","text":"Nina, if there's anything I can help with, just let me know"},
+
+  {"who":"me","time":"2026-01-01 00:05","text":"Happy New Year!"},
+
+  {"who":"me","time":"2026-01-03 12:08","text":"Nina, if you have time, please reply. I'm really worried about you"},
+
+  {"who":"you","time":"2026-01-04 09:11","text":"I'm fine, don't worry"},
+  {"who":"me","time":"2026-01-04 09:12","text":"That's good. Make sure to tell me if anything comes up"},
+
+  {"who":"me","time":"2026-01-09 16:26","text":"Nina, are you really okay?"},
+  {"who":"you","time":"2026-01-09 21:34","text":"I'm fine"},
+
+  {"who":"me","time":"2026-01-12 15:45","text":"Nina, did I do something to upset you?"},
+
+  {"who":"me","time":"2026-01-18 18:21","text":"Nina?"}
+]
