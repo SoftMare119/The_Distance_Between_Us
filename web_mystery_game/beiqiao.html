@@ -199,6 +199,16 @@
       opacity: 0.9;
     }
 
+    .back-link a + a {
+      margin-left: 12px;
+    }
+
+    .back-link a.secondary {
+      background: #fff;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
     @media (max-width: 768px) {
       header h1 {
         font-size: 36px;
@@ -287,6 +297,11 @@
         <h3>营商环境</h3>
         <p>政府服务高效，政策支持力度大，创业创新氛围浓厚，连续多年被评为"最佳营商环境城市"。</p>
       </div>
+    </div>
+
+    <div class="back-link">
+      <a href="javascript:history.back()">返回上一页</a>
+      <a class="secondary" href="search.html">返回搜索</a>
     </div>
   </div>
 </body>
